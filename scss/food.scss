@@ -1,0 +1,435 @@
+
+    /*--------------------------------------------------------------------------------------------------------
+     VARIABLES, MIXINS
+    ----------------------------------------------------------------------------------------------------------*/
+
+    @import 'reset';
+    
+    $hue-white: #f8f8f8; // white
+    $hue-lily-white: #eaecea; // a less harsh white
+    $hue-geranium: #e22727; // red
+    $hue-buff: #f4d06f; // muted, chilled out gold
+    
+    @mixin font-hind { 
+        font-family: 'Hind', sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @mixin font-inconsolata { 
+        font-family: 'Inconsolata', monospace;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @mixin transition($transition-property, $transition-time, $method) {
+        transition: $transition-property $transition-time $method;
+    }
+
+
+ /* --------------------------------------------------------------------------------------------------------
+     GENERAL
+    ----------------------------------------------------------------------------------------------------------*/
+
+    html, body {  
+        background: $hue-lily-white;
+        -webkit-text-size-adjust: 100%; /* stop Mobile Safari auto-adjusting font-sizes */
+    }
+
+    // contains content across all pages
+    .wrap { 
+//         border: 1px solid purple;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto; 
+        margin-right: auto;
+        padding-bottom: 100px;
+    }
+
+
+ /* --------------------------------------------------------------------------------------------------------
+     TYPOGRAPHY
+    ----------------------------------------------------------------------------------------------------------*/
+
+    body {  
+        color: $hue-geranium;
+        font-size: 18px;
+        line-height: 27px;
+        @include font-inconsolata;
+        
+        a {
+            color: $hue-geranium;
+        }
+    }
+
+    h1 { // category name on TOC page, recipe name on recipe page
+        font-size: 27px;
+        margin: 0 0 28px; 
+//         opacity: .1;
+        @include font-hind; 
+    }
+
+    i { font-style: italic; } // true italics not available for Hind or Inconsolata
+
+   // Recipe pages - recipe notes and source, at bottom of recipes
+    .side-notes {
+        p {
+            font-size: 13.5px;
+            line-height: 18px;
+            margin-top: 31px; 
+            margin-bottom: 36px;
+
+            a {
+                border-bottom: 1px solid rgba($hue-geranium, .6);
+                padding: 0 2px 1px; // make link wider 
+                margin: 0 -2px;     // but not visbibly wider
+                transition: .2s ease-in-out;
+                
+                &:hover {
+                    color: #ff8811;
+                    border-bottom-color: #ff8811;
+                    background: #ff8811;
+                    color: white;
+                }
+            }
+            
+            strong { text-transform: uppercase; } // not used?
+        }
+    }
+
+   // Recipe pages - bullets between ingredient & amount
+    ul li span { 
+        vertical-align: baseline;
+        position: relative;
+        top: 0;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; // standard bullets aren't chunky enough
+        font-size: 0.9625em;
+    }
+
+
+ /* --------------------------------------------------------------------------------------------------------
+     SPACING
+    ----------------------------------------------------------------------------------------------------------*/
+
+    ul {
+        margin-bottom: calc(27px - 2px); // due to 2px padding on top of ol li
+    }
+
+
+ /* --------------------------------------------------------------------------------------------------------
+     SPECIAL - arrows on hover of TOC recipes
+    ----------------------------------------------------------------------------------------------------------*/
+
+    .section-list {
+        margin-left: 40px;
+        li { margin-left: -46px; } // compensate for arrow sticking out
+    }
+
+    .section-list {
+        a {
+            position: relative;
+            padding: 2px 6px 4px;
+            border-radius: 2px;
+            outline: 0; // reset
+            color: $hue-geranium;
+            transition: .1s ease-in-out;
+            &::before { // arrow indicator appears on hover
+                content: "→";
+                position: absolute;
+                top: -4px;                
+                left: -17px;
+                font-family: Consolas, monaco, monospace;
+                opacity: 0;
+            }
+            
+            &:hover {
+                background: $hue-buff;
+                &::before {
+                    opacity: 1;
+                    transition-delay: .05s;
+                }
+            }
+                        
+            &:focus { background: $hue-buff; }
+        }
+    }
+
+    .section-list li:last-child {
+        margin-bottom: 40.5px; // 1.5 × 27px
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* --------------------------------------------------------------------------------------------------------
+     HEADER
+    ----------------------------------------------------------------------------------------------------------*/
+
+    // All pages - frying pan image
+    .pseudo-header {
+/*
+        width: 100%;
+        height: 40px;
+        background: aqua;
+        border-bottom: 2px solid black;
+*/
+
+        width: 64px;
+        position: absolute;
+        right: 60px;
+        top: 46px;
+        
+        img {
+            transform: rotate(-30deg);
+            width: 100%;
+            opacity: .6;
+        }
+
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            @include transition(all, 0.2s, ease-in-out);
+
+            &:hover {
+//                 background: red;
+            }
+        }
+    }
+
+/*
+    header {
+        margin-bottom: 26px;
+    }
+*/
+
+
+
+
+
+
+
+
+ /* --------------------------------------------------------------------------------------------------------
+    FILTER
+    ----------------------------------------------------------------------------------------------------------*/
+
+    // Homepage
+    #instafilta-field { margin-bottom: 50px;} // adjust this later
+    
+//     .instafilta-match { color: #7b7; }
+
+    .scope { margin-top: 60px; }
+
+
+ /* --------------------------------------------------------------------------------------------------------
+    RECIPE PAGES
+    ----------------------------------------------------------------------------------------------------------*/
+
+    body.recipe-individ {
+//         margin-top: 49px;
+    }
+
+
+    // Interior pages
+    .recipe {
+        margin-top: 92px;
+    }
+
+    // changing to counter allows fine tuning of number styles
+    .recipe ol {
+        margin-left: -35px;
+    }
+
+	.recipe ol {
+		counter-reset: li; /* Initiate a counter */
+	}
+	
+	.recipe ol > li {
+		position: relative; /* create a positioning context */
+		list-style: none; /* disable the normal item numbering */
+		padding-left: 35px;
+        margin-bottom: 23px; // line-height minus 4px accounts for padding
+
+
+ /* +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++  */
+
+margin-bottom: calc(27px - 4px); // line-height minus 4px accounts for top + bottom padding
+
+
+ /* +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++  */
+
+
+
+		border-radius: 3px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		padding-right: 5px;
+	}
+
+	.recipe ol > li:before {
+		content: counter(li); /* use the counter as content */
+		counter-increment: li; /* increment the counter by 1 */
+		position:absolute;
+		width: 20px; /* width of double-digit number plus period */
+		top: 2px;
+		left: 0;
+		text-align:right;
+    }
+
+    .recipe ol > li:after {
+        content:".";
+		position:absolute;
+		top: 2px;
+		left: 21px;
+    }
+
+
+    // Interior pages - step gets highlighted when user taps it
+
+	.recipe ol > li { transition: all .25s ease-in-out; }
+    .highlight { background-color: $hue-white; }
+    .no-highlight { background-color: none; }
+
+
+/*------------------------------------------------------------------------------------------------------------
+    RECIPE - INSTRUCTIONS
+  ------------------------------------------------------------------------------------------------------------*/
+    
+    // BIG SCREEN
+    @media only screen and (max-width: 760px) {
+        .recipe ol { 
+            margin-left: -20px;
+        }
+    }
+    
+    
+/*------------------------------------------------------------------------------------------------------------
+    SEARCH FIELD 
+  ------------------------------------------------------------------------------------------------------------*/
+        
+    input:focus, 
+    textarea:focus {
+        outline: none;
+    }    
+    
+    .scope input[type="search"] {
+        transition: all 0.2s ease 0s;
+//         width: 180px;
+    }
+    
+    .scope input[type="search"], 
+    .scope input[type="search"]:focus {
+//         width: 220px;
+    }
+    
+    .scope input[type="search"] {
+        border-bottom: 1px solid rgba(#9bc1bc,.6);
+        box-shadow: 0 1px 0 rgba( 255, 255, 255, .5);
+        display: block;
+        font-size: 0.9375rem;
+font-size: 15.4285714286px; // 27px/1.75
+        padding: 0.4em 0;
+    }
+    
+    .scope input[type="search"], 
+    .scope input[type="search"]:focus {
+//         width: 180px;
+    }
+    
+    .scope input[type="search"]:focus {
+        border-bottom-color: #9bc1bc;
+    }
+    .scope input[type="search"] {
+        background: none repeat scroll 0 0 transparent;
+        padding: 7px 0;
+        width: 100%;
+    }
+    
+    input, textarea {
+        -moz-appearance: none;
+        border: medium none;
+        border-radius: 0;
+        color: #5e9890; 
+        font-size: 15px;
+        @include font-inconsolata;
+    }
+    
+
+
+
+
+
+
+
+
+
+
+h5.corner-crumb {
+    font-size: 11px;
+    position: absolute;
+    bottom: 2.7vw;
+    right: 40px;
+    text-align: right;
+    white-space: nowrap;
+    margin-bottom: 0;
+    z-index: 10;
+    transform: rotate(90deg);
+    transform-origin: 100% 100%
+}
+
+h5.corner-crumb,
+h5.corner-crumb a {
+    color: rgba(#5e9890,.8);
+    
+}
+
+@media only screen and (max-width: 700px) {
+    h5.corner-crumb {
+        bottom: 22px;
+        right: 26px
+    }
+}
+h5.corner-crumb::before,
+h5.corner-crumb::after {
+    transform-origin: 100% 100%;
+    right: 112%
+}
+h5.corner-crumb::after {
+    position: absolute;
+    top: 0%;
+    text-align: right;
+    font-weight: 700;
+    padding-right: 40px
+}
+
+h5.corner-crumb {
+    &.no1::after { content: '01'; }
+    &.no2::after { content: '02'; }
+}
+
+h5.corner-crumb::before {
+    position: absolute;
+    top: 45%;
+    content: '';
+    height: 2px;
+    width: 30px;
+    background-color: rgba(#5e9890,.6);
+}

@@ -1,0 +1,1 @@
+$(function(){$(".headroom").each(function(){var o=$(document),d=$(window),n=$(this),a=!1,e=0;d.on("scroll",function(){var d=o.scrollTop(),r=d-e;e=d,r>10&&d>200?a||(n.addClass("headroom-hidden"),a=!0):(-10>r||200>d)&&a&&(n.removeClass("headroom-hidden"),a=!1)})})});
